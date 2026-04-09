@@ -10,8 +10,32 @@ export function TransactionProvider({ children }) {
   saveTransactions(transactions);
 }, [transactions]);
 
+function addTransaction(tx) {
+    setTransactions(prev => [tx, ...prev]);
+  }
+
+  function deleteTransaction(id) {
+    setTransactions(prev => prev.filter(t => t.id !== id));
+  }
+
+  function updateTransaction(updatedTx) {
+    setTransactions(prev =>
+      prev.map(t => (t.id === updatedTx.id ? updatedTx : t))
+    );
+  }
+
+  function getAllTransactions() {
+    return transactions;
+  }
+
   return (
-    <TransactionContext.Provider value={{ transactions }}>
+    <TransactionContext.Provider value={{
+        transactions,
+        addTransaction,
+        deleteTransaction,
+        updateTransaction,
+        getAllTransactions,
+      }}>
       {children}
     </TransactionContext.Provider>
   );
