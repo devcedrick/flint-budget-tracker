@@ -6,6 +6,10 @@ const TransactionContext = createContext();
 export function TransactionProvider({ children }) {
   const [transactions, setTransactions] = useState(() => loadTransactions());
 
+  useEffect(() => {
+  saveTransactions(transactions);
+}, [transactions]);
+
   return (
     <TransactionContext.Provider value={{ transactions }}>
       {children}
