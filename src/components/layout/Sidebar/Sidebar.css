@@ -22,15 +22,15 @@
 }
 
 /* Dark mode basic support */
-:global(.dark) .sidebar {
+.dark .sidebar {
   background-color: #1f2937;
   border-right-color: #374151;
 }
 
-:global(.dark) .navItem {
+.dark .navItem {
   color: #d1d5db;
 }
 
-:global(.dark) .navItem:hover {
+.dark .navItem:hover {
   background-color: #374151;
 }
