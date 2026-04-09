@@ -5,12 +5,14 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   fullWidth?: boolean;
+  wrapperClassName?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,
   error,
   fullWidth = false,
+  wrapperClassName = '',
   className = '',
   id,
   ...props
@@ -19,9 +21,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   const inputId = id || generatedId;
 
   return (
-    <div className={`input-wrapper ${fullWidth ? 'input-wrapper-full' : ''} ${className}`.trim()}>
+    <div className={`input-wrapper ${fullWidth ? 'input-wrapper-full' : ''} ${wrapperClassName}`.trim()}>
       {label && <label htmlFor={inputId} className="input-label">{label}</label>}
-      <input ref={ref} id={inputId} className={`input-field ${error ? 'input-error' : ''}`} {...props} />
+      <input ref={ref} id={inputId} className={`input-field ${error ? 'input-error' : ''} ${className}`.trim()} {...props} />
       {error && <span className="input-error-text">{error}</span>}
     </div>
   );

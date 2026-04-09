@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.css';
 
@@ -11,19 +11,22 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) {
+  const titleId = useId();
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    }
+    if (!isOpen) return;
+
+    document.addEventListener('keydown', handleEscape);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = originalOverflow;
     };
   }, [isOpen, onClose]);
 
@@ -31,9 +34,16 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
 
   return createPortal(
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
+      <div 
+        className="modal-container" 
+        onClick={e => e.stopPropagation()} 
+        role="dialog" 
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        aria-label={!title ? "Dialog" : undefined}
+      >
         <div className="modal-header">
-          {title && <h3 className="modal-title">{title}</h3>}
+          {title && <h3 id={titleId} className="modal-title">{title}</h3>}
           <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">&times;</button>
         </div>
         <div className="modal-content">
