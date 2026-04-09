@@ -4,7 +4,7 @@ import { loadTransactions, saveTransactions } from "../utils/storage";
 const TransactionContext = createContext();
 
 export function TransactionProvider({ children }) {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(() => loadTransactions());
 
   return (
     <TransactionContext.Provider value={{ transactions }}>
