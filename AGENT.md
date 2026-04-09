@@ -34,7 +34,7 @@ complexity of async operations or a live server.
 | Layer | Choice |
 |---|---|
 | Framework | React (via Vite) |
-| Styling | CSS Modules |
+| Styling | Vanilla CSS |
 | State | React Context API |
 | Persistence | `localStorage` (synchronous) |
 | File Export | Blob API |
